@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="tg" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeLab TJ — Маҷмааи таълимии барномасозӣ</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Font Awesome for UI Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Monaco Editor Loaders -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs/loader.min.js"></script>
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-brand">
+            <span class="logo-icon">&lt;/&gt;</span>
+            <span class="logo-text">CodeLab <span class="accent-text">TJ</span></span>
+        </div>
+        
+        <nav class="nav-menu" id="navMenu">
+            <button class="nav-link active" data-view="home"><i class="fa-solid fa-house"></i> <span data-i18n="nav_home">Асосӣ</span></button>
+            <button class="nav-link" data-view="learn"><i class="fa-solid fa-book-open"></i> <span data-i18n="nav_learn">Дарсҳо</span></button>
+            <button class="nav-link" data-view="languages"><i class="fa-solid fa-code"></i> <span data-i18n="nav_languages">Забонҳо</span></button>
+            <button class="nav-link" data-view="editor"><i class="fa-solid fa-laptop-code"></i> <span data-i18n="nav_editor">Муҳаррир</span></button>
+            <button class="nav-link" data-view="challenges"><i class="fa-solid fa-trophy"></i> <span data-i18n="nav_challenges">Супоришҳо</span></button>
+            <button class="nav-link" data-view="projects"><i class="fa-solid fa-folder-open"></i> <span data-i18n="nav_projects">Лоиҳаҳо</span></button>
+            <button class="nav-link" data-view="leaderboard"><i class="fa-solid fa-chart-line"></i> <span data-i18n="nav_leaderboard">Рейтинг</span></button>
+        </nav>
+
+        <div class="nav-actions">
+            <!-- Language Switcher -->
+            <div class="lang-selector">
+                <select id="langSelect">
+                    <option value="tg">🇹🇯 Тоҷикӣ</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="en">🇬🇧 English</option>
+                </select>
+            </div>
+            <!-- Theme Toggle -->
+            <button class="icon-btn" id="themeToggleBtn" title="Гузариши мавзӯъ">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <!-- User Profile Quick Link -->
+            <button class="profile-btn" data-view="profile" id="navProfileBtn">
+                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=CodeLabUser" alt="Аватар" id="navAvatar">
+                <span id="navUsername">Кодери №1</span>
+            </button>
+            <!-- Mobile Toggle -->
+            <button class="mobile-toggle" id="mobileMenuBtn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Global Notification Banner -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Command Palette Modal (Ctrl + K) -->
+    <div id="commandPalette" class="modal-backdrop hidden">
+        <div class="command-modal">
+            <div class="command-header">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="commandInput" placeholder="Ҷустуҷӯи дарсҳо, забонҳо, супоришҳо (Ctrl+K)...">
+                <span class="cmd-badge">ESC</span>
+            </div>
+            <div class="command-results" id="commandResults"></div>
+        </div>
+    </div>
+
+    <!-- MAIN VIEW CONTAINERS -->
+    <main class="main-content">
+        
+        <!-- 1. HOME VIEW -->
+        <section id="view-home" class="view-section active">
+            <div class="hero">
+                <div class="hero-bg-animation" id="heroBg"></div>
+                <div class="hero-content">
+                    <h1 class="hero-title">CodeLab <span class="accent-text">TJ</span></h1>
+                    <p class="hero-tagline" data-i18n="hero_tagline">Омӯз. Код навис. Соз.</p>
+                    <p class="hero-subtitle" data-i18n="hero_subtitle">Барномасозиро омӯзед, коди воқеӣ нависед ва лоиҳаҳои худро бевосита дар браузер созед.</p>
+                    <div class="hero-cta">
+                        <button class="btn btn-primary btn-lg" data-view="editor"><i class="fa-solid fa-play"></i> <span data-i18n="btn_start_coding">Оғози рамзнависӣ</span></button>
+                        <button class="btn btn-secondary btn-lg" data-view="languages"><i class="fa-solid fa-compass"></i> <span data-i18n="btn_explore_lang">Кашфи забонҳо</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Platform Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fa-solid fa-code"></i>
+                    <h3 class="stat-num">13+</h3>
+                    <p data-i18n="stat_lang">Забонҳои барномасозӣ</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fa-solid fa-list-check"></i>
+                    <h3 class="stat-num">100+</h3>
+                    <p data-i18n="stat_challenges">Супоришҳои рамзӣ</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <h3 class="stat-num">50+</h3>
+                    <p data-i18n="stat_lessons">Дарсҳои интерактивӣ</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fa-solid fa-infinity"></i>
+                    <h3 class="stat-num">∞</h3>
+                    <p data-i18n="stat_projects">Лоиҳаҳои бемаҳдуд</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. LANGUAGES VIEW -->
+        <section id="view-languages" class="view-section">
+            <div class="section-header">
+                <h2 data-i18n="lang_title">Забонҳои барномасозӣ</h2>
+                <p data-i18n="lang_desc">Забони дилхоҳатонро интихоб кунед ва ба омӯзиш оғоз намоед</p>
+            </div>
+            <div class="languages-grid" id="languagesGrid"></div>
+        </section>
+
+        <!-- 3. CODE EDITOR VIEW -->
+        <section id="view-editor" class="view-section">
+            <div class="editor-toolbar">
+                <div class="file-tabs" id="editorTabs">
+                    <button class="tab-btn active" data-file="index.html"><i class="fa-brands fa-html5"></i> index.html</button>
+                    <button class="tab-btn" data-file="style.css"><i class="fa-brands fa-css3-alt"></i> style.css</button>
+                    <button class="tab-btn" data-file="script.js"><i class="fa-brands fa-js"></i> script.js</button>
+                </div>
+                <div class="toolbar-actions">
+                    <button class="btn btn-success btn-sm" id="btnRunCode" title="Иҷро (Ctrl+Enter)"><i class="fa-solid fa-play"></i> <span data-i18n="btn_run">Иҷро</span></button>
+                    <button class="btn btn-secondary btn-sm" id="btnSaveCode" title="Захира (Ctrl+S)"><i class="fa-solid fa-floppy-disk"></i> <span data-i18n="btn_save">Захира</span></button>
+                    <button class="btn btn-warning btn-sm" id="btnResetCode"><i class="fa-solid fa-rotate-right"></i> <span data-i18n="btn_reset">Бозсозӣ</span></button>
+                    <button class="btn btn-info btn-sm" id="btnShareCode"><i class="fa-solid fa-share-nodes"></i> <span data-i18n="btn_share">Равона кардан</span></button>
+                </div>
+            </div>
+
+            <div class="editor-workspace">
+                <!-- File Explorer Sidebar -->
+                <div class="file-explorer">
+                    <div class="explorer-title"><i class="fa-solid fa-folder-tree"></i> <span data-i18n="explorer_title">Файлҳо</span></div>
+                    <ul class="file-tree" id="fileTree">
+                        <li class="file-item active" data-file="index.html"><i class="fa-brands fa-html5 html-icon"></i> index.html</li>
+                        <li class="file-item" data-file="style.css"><i class="fa-brands fa-css3-alt css-icon"></i> style.css</li>
+                        <li class="file-item" data-file="script.js"><i class="fa-brands fa-js js-icon"></i> script.js</li>
+                    </ul>
+                </div>
+
+                <!-- Central Editor Area -->
+                <div class="monaco-container" id="monacoEditorContainer">
+                    <textarea id="fallbackTextarea" class="fallback-editor" spellcheck="false" placeholder="Коди худро дар ин ҷо нависед..."></textarea>
+                </div>
+
+                <!-- Output Panel (Split Preview & Console) -->
+                <div class="output-panel">
+                    <div class="panel-tabs">
+                        <button class="panel-tab active" data-panel="preview"><i class="fa-solid fa-desktop"></i> <span data-i18n="tab_preview">Пешнамоиш</span></button>
+                        <button class="panel-tab" data-panel="console"><i class="fa-solid fa-terminal"></i> <span data-i18n="tab_console">Консол</span></button>
+                        <button class="panel-tab" data-panel="errors"><i class="fa-solid fa-circle-exclamation"></i> <span data-i18n="tab_errors">Хатогиҳо</span></button>
+                    </div>
+                    <div class="panel-content">
+                        <div id="panel-preview" class="panel-view active">
+                            <iframe id="previewFrame" sandbox="allow-scripts" title="Санҷандаи иҷро"></iframe>
+                        </div>
+                        <div id="panel-console" class="panel-view">
+                            <div class="console-logs" id="consoleOutput"></div>
+                        </div>
+                        <div id="panel-errors" class="panel-view">
+                            <div class="error-container" id="errorBox">
+                                <div class="no-errors"><i class="fa-solid fa-circle-check"></i> <span data-i18n="no_errors">Ҳеҷ хатое ёфт нашуд.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. LEARN LESSONS VIEW -->
+        <section id="view-learn" class="view-section">
+            <div class="learn-layout">
+                <aside class="sidebar-topics">
+                    <h3><i class="fa-solid fa-graduation-cap"></i> <span data-i18n="lessons_menu">Феҳристи дарсҳо</span></h3>
+                    <div class="topic-accordion" id="lessonsAccordion"></div>
+                </aside>
+                <article class="lesson-viewer" id="lessonViewer">
+                    <div class="select-prompt">
+                        <i class="fa-solid fa-book-bookmark"></i>
+                        <h3 data-i18n="select_lesson_title">Дарсро аз меню интихоб кунед</h3>
+                        <p data-i18n="select_lesson_desc">Омӯзишро аз асосҳои HTML, CSS ё JavaScript оғоз намоед.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- 5. CODING CHALLENGES VIEW -->
+        <section id="view-challenges" class="view-section">
+            <div class="section-header">
+                <h2 data-i18n="challenges_title">Супоришҳои барномасозӣ</h2>
+                <p data-i18n="challenges_desc">Маҳорати худро бо ҳалли масъалаҳои амалӣ санҷед</p>
+            </div>
+            <div class="challenges-grid" id="challengesGrid"></div>
+        </section>
+
+        <!-- 6. PROJECTS VIEW -->
+        <section id="view-projects" class="view-section">
+            <div class="section-header project-header-flex">
+                <div>
+                    <h2 data-i18n="projects_title">Лоиҳаҳои ман</h2>
+                    <p data-i18n="projects_desc">Лоиҳаҳои худро созед, захира ва идора кунед</p>
+                </div>
+                <button class="btn btn-primary" id="btnNewProject"><i class="fa-solid fa-plus"></i> <span data-i18n="btn_new_project">Лоиҳаи нав</span></button>
+            </div>
+            <div class="projects-grid" id="projectsGrid"></div>
+        </section>
+
+        <!-- 7. LEADERBOARD VIEW -->
+        <section id="view-leaderboard" class="view-section">
+            <div class="section-header">
+                <h2 data-i18n="leaderboard_title">Ҷадвали пешсафон</h2>
+                <p data-i18n="leaderboard_desc">Барномасозони беҳтарини CodeLab TJ</p>
+            </div>
+            <div class="leaderboard-card">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th data-i18n="th_user">Корбар</th>
+                            <th data-i18n="th_level">Дараҷа</th>
+                            <th data-i18n="th_xp">XP Балл</th>
+                            <th data-i18n="th_completed">Супоришҳо</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 8. USER PROFILE VIEW -->
+        <section id="view-profile" class="view-section">
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="avatar-wrapper">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=CodeLabUser" id="profileAvatar" alt="Аватар">
+                    </div>
+                    <div class="profile-identity">
+                        <h2 id="profileUsername">Кодери №1</h2>
+                        <span class="user-rank-badge" id="profileRankBadge">Новичок</span>
+                    </div>
+                </div>
+
+                <div class="gamification-row">
+                    <div class="g-box">
+                        <i class="fa-solid fa-bolt icon-xp"></i>
+                        <div>
+                            <span class="g-val" id="profileXP">0</span>
+                            <span class="g-lbl">Балли XP</span>
+                        </div>
+                    </div>
+                    <div class="g-box">
+                        <i class="fa-solid fa-layer-group icon-lvl"></i>
+                        <div>
+                            <span class="g-val" id="profileLevel">1</span>
+                            <span class="g-lbl">Дараҷа</span>
+                        </div>
+                    </div>
+                    <div class="g-box">
+                        <i class="fa-solid fa-fire icon-streak"></i>
+                        <div>
+                            <span class="g-val" id="profileStreak">1 рӯз</span>
+                            <span class="g-lbl">Пайвастагӣ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-section">
+                    <h3><i class="fa-solid fa-bars-progress"></i> <span data-i18n="title_progress">Пешрафти забонҳо</span></h3>
+                    <div class="skills-progress-list" id="skillsProgressList"></div>
+                </div>
+
+                <div class="achievements-section">
+                    <h3><i class="fa-solid fa-award"></i> <span data-i18n="title_achievements">Дастнавардҳо</span></h3>
+                    <div class="achievements-grid" id="achievementsGrid"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JS Core Loaders -->
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/lessonsData.js"></script>
+    <script src="assets/js/store.js"></script>
+    <script src="assets/js/editor.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
